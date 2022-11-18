@@ -17,6 +17,24 @@
       >
         <h3>Chapters</h3>
         <!-- All the lessons for the course listed here -->
+        <div v-for="chapter in chapters" :key="chapter.slug">
+          <h3>{{ chapter.title }}</h3>
+          <NuxtLink
+            v-for="(lesson, index) in chapter.lessons"
+            :key="lesson.slug"
+            :to="lesson.path"
+            class="flex flex-row space-x-1 font-normal hover:bg-sky-300"
+            :class="{
+              'text-blue-500': lesson.path === $route.fullPath,
+              'text-gray-500': lesson.path !== $route.fullPath,
+            }"
+          >
+            <span class="text-grey-500">{{ index + 1 }}.</span>
+            <span>
+              {{ lesson.title }}
+            </span>
+          </NuxtLink>
+        </div>
       </div>
 
       <div class="prose p-12 bg-white rounded-md w-[65ch]">
@@ -25,3 +43,7 @@
     </div>
   </div>
 </template>
+
+<script setup>
+const { chapters } = useCourse();
+</script>
